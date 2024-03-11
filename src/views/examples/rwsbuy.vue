@@ -8,6 +8,7 @@
             activationtime="2"
             available="7"
 
+            :chainInfoUploaded="chainInfoStatus"
             :rwsExpiration="expiredate"
             @on-activate="activateRWS"
           />
@@ -28,8 +29,18 @@ import { useStore } from 'vuex'
 const store = useStore()
 
 const expiredate = ref(null)
+const chainInfoStatus = ref(false)
 
-onMounted( () => {
+onMounted( async () => {
+
+  /*
+  Проверка загрузки данных из чейна. Если все загрузилось, то ставим true.
+  Можно оставить setTimeout всегда, чтобы лоадер сильно не мерцал, если данные быстро загрузились.
+  */
+
+  setTimeout(() => {
+    chainInfoStatus.value = true
+  }, 1000)
   
   /*
   При загрузке надо проверить есть ли подписка для подключенного адреса (store.state.robonomicsUIvue.polkadot.address)
